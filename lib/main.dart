@@ -1,16 +1,24 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/Cadastro.dart';
+import 'package:flutter_application_1/src/login.dart';
+// import 'package:flutter_application_1/src/tela1.dart';
+// import 'package:flutter_application_1/src/tela2.dart';
+// import 'package:flutter_application_1/src/tela3.dart';
+// import 'package:flutter_application_1/src/tela4.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, Key? key2});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Widgets',
+      title: 'Olá',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -20,228 +28,125 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, Key? key4});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Widgets'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text('Checkbox'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CheckboxPage()),
-                );
-              },
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text('RadioButton'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RadioButtonPage()),
-                );
-              },
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text('Switch'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SwitchPage()),
-                );
-              },
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              child: const Text('Slider'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SliderPage()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+  int _selectedIndex = 0;
+
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Cadastro(),
+    const tela2(),
+    const tela3(),
+    const Login(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
-}
-
-// Código para cada página de widget (Checkbox, RadioButton, Switch, Slider)
-
-// Página Checkbox
-class CheckboxPage extends StatefulWidget {
-  const CheckboxPage({super.key});
-
-  @override
-  _CheckboxPageState createState() => _CheckboxPageState();
-}
-
-class _CheckboxPageState extends State<CheckboxPage> {
-  bool? _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Checkbox'),
+        title: const Text('Olá, Usuário'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Checkbox(
-              value: _isChecked,
-              onChanged: (value) {
-                setState(() {
-                  _isChecked=value;
-                });
-              },
-            ),
-            Text('Checkbox está marcado: $_isChecked'),
-          ],
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon( Icons.account_circle),
+            label: 'Cadastro',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Tela 2',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Tela 3',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Tela 4',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
 }
 
-// Página RadioButton
-class RadioButtonPage extends StatefulWidget {
-  const RadioButtonPage({super.key});
-
-  @override
-  _RadioButtonPageState createState() => _RadioButtonPageState();
-}
-
-class _RadioButtonPageState extends State<RadioButtonPage> {
-  String? _selectedValue = 'Opção 1';
+class tela1 extends StatelessWidget {
+  const tela1({super.key, Key? key5});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RadioButton'),
+        title: const Text('Tela 1'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Radio(
-              value: 'Opção 1',
-              groupValue: _selectedValue,
-              onChanged: (value) {
-                setState(() {
-                  _selectedValue=value;
-                  });
-              },
-            ),
-            const Text('Opção 1'),
-            Radio(
-              value: 'Opção 2',
-              groupValue: _selectedValue,
-              onChanged: (value) {
-                setState(() {
-                  _selectedValue = value;
-                });}
-            ),
-            const Text('Opção 2'),
-            Text('Valor selecionado: $_selectedValue'),
-          ],
-        ),
+      body: const Center(
+        child: Text('Conteúdo da tela 1'),
       ),
     );
   }
 }
 
-// Página Switch
-class SwitchPage extends StatefulWidget {
-  const SwitchPage({super.key});
-
-  @override
-  _SwitchPageState createState() => _SwitchPageState();
-}
-
-class _SwitchPageState extends State<SwitchPage> {
-  bool _isSwitched = false;
+class tela2 extends StatelessWidget {
+  const tela2({super.key, Key? key5});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Switch'),
+        title: const Text('Tela 2'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Switch(
-              value: _isSwitched,
-              onChanged: (value) {
-                setState(() {
-                  _isSwitched = value;
-                });
-              },
-            ),
-            Text('Switch está ligado: $_isSwitched'),
-          ],
-        ),
+      body: const Center(
+        child: Text('Conteúdo da tela 2'),
       ),
     );
   }
 }
-class SliderPage extends StatefulWidget {
-  const SliderPage({super.key});
 
-  @override
-  _SliderPageState createState() => _SliderPageState();
-}
-
-class _SliderPageState extends State<SliderPage> {
-  double _currentSliderValue = 0.0;
+class tela3 extends StatelessWidget {
+  const tela3({super.key, Key? key6});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Slider'),
+        title: const Text('Tela 3'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Slider(
-              value: _currentSliderValue,
-              min: 0.0,
-              max: 100.0,
-              onChanged: (value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
-            ),
-            Text('Valor atual: $_currentSliderValue'),
-          ],
-        ),
+      body: const Center(
+        child: Text('Conteúdo da tela 3'),
       ),
     );
   }
 }
 
+class tela4 extends StatelessWidget {
+  const tela4({super.key, Key? key7});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tela 4'),
+      ),
+      body: const Center(
+        child: Text('Conteúdo da tela 4'),
+      ),
+    );
+  }
+}
