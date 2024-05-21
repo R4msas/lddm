@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
 
@@ -10,14 +11,15 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _saveUserData(String email, String password) async {
+  void _saveUserData(String name, String email, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', name);
     await prefs.setString('email', email);
     await prefs.setString('password', password);
-    // Após salvar os dados, você pode adicionar uma navegação para outra tela aqui
   }
 
   @override
@@ -31,6 +33,13 @@ class _CadastroState extends State<Cadastro> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nome',
+              ),
+            ),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -49,9 +58,10 @@ class _CadastroState extends State<Cadastro> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
+                String name = _nameController.text;
                 String email = _emailController.text;
                 String password = _passwordController.text;
-                _saveUserData(email, password);
+                _saveUserData(name, email, password);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Cadastro realizado com sucesso!')),
                 );
